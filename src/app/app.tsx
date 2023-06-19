@@ -1,12 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.scss';
 
-import NxWelcome from './nx-welcome';
+import MapTest from './maptest';
+import Container from '@mui/material/Container';
 
 export function App() {
   return (
     <div>
-      <NxWelcome title="bikegis" />
+    <Container>
+        <MapTest />
+        </Container>
     </div>
   );
 }
