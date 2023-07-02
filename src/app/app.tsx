@@ -1,16 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.scss';
 
-import MapTest from './maptest';
-import Container from '@mui/material/Container';
+import { Route, Routes } from 'react-router-dom';
+
+import Home from '../pages/home/home';
 
 export function App() {
   return (
-    <div>
-    <Container>
-        <MapTest />
-        </Container>
-    </div>
+    <Routes>
+      <Route path="/" element={<><h1>NEVER DOUBTED</h1><h1>ALWAYS FEARED</h1></>} />
+      <Route path="/map/:mapurl" element={<Home />} />
+    </Routes>
   );
 }
 
