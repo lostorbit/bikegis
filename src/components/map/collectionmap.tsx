@@ -8,9 +8,12 @@ import {
   GeoJSON,
   LayerGroup,
   LayersControl,
+  useMapEvents,
+  Marker,
+  Popup,
 } from "react-leaflet";
 import * as geojson from "geojson";
-import { LatLngTuple } from "leaflet";
+import { LatLngTuple, LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import hash from "object-hash";
@@ -27,14 +30,20 @@ const nullIsland = {
 export default function CollectionMap(props: MapProps) {
   const [collectionObject, setCollectionObject] =
     useState<geojson.FeatureCollection>();
+
   const [mapObjectBasic, setMapObjectBasic] =
     useState<geojson.GeoJsonObject>(nullIsland);
 
+  const [mapCenter, setMapCenter] = useState<LatLng>({
+    lat: 34.0982107,
+    lng: -118.2658979,
+  } as LatLng);
+
   //
-  // Dynamically load a map from somewhere
+  // Grab the layer location from the URL
   const cd_location = `/src/assets/${props.mapurl}.geojson`;
 
-  // Set the map
+  // Dynamically load the layer definitions from somewhere
   useEffect(() => {
     const getMapData = async (loc: string) => {
       const cd_map_remote = (await fetch(loc).then(function (response) {
@@ -54,11 +63,27 @@ export default function CollectionMap(props: MapProps) {
     getMapData(cd_location).catch(console.error);
   }, []);
 
-  // Set a default center location
-  const mapCenter = [34.0982107, -118.2658979] as LatLngTuple;
+  function LocationMarker() {
+    // Set a default center location
+    const map = useMapEvents({
+      click() {
+        map.locate();
+      },
+      locationfound(e) {
+        setMapCenter(e.latlng);
+        map.flyTo(e.latlng, map.getZoom());
+      },
+    });
+
+    return mapCenter === null ? null : (
+      <Marker position={mapCenter}>
+        <Popup>You are here</Popup>
+      </Marker>
+    );
+  }
 
   return (
-    <MapContainer center={mapCenter} zoom={13} scrollWheelZoom={false}>
+    <MapContainer center={mapCenter} zoom={13} scrollWheelZoom={true}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -67,7 +92,7 @@ export default function CollectionMap(props: MapProps) {
       <LayersControl position="topright">
         {collectionObject?.features.map((layer) => {
           return (
-            <LayersControl.Overlay name={layer.properties?.dist_name}>
+            <LayersControl.Overlay name={layer.properties?.display_name}>
               <GeoJSON key={hash(layer)} data={layer} />
             </LayersControl.Overlay>
           );
@@ -79,6 +104,7 @@ export default function CollectionMap(props: MapProps) {
           <GeoJSON key={hash(mapObjectBasic)} data={mapObjectBasic} />
         )}
       </LayerGroup>
+      <LocationMarker />
     </MapContainer>
   );
 }
