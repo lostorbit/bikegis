@@ -2,6 +2,7 @@ import CollectionMap from "../../components/map/collectionmap";
 import Container from "@mui/material/Container";
 
 import { useParams } from "react-router-dom";
+import DynamicMap from "../../components/map/dynamicmap";
 
 export default function Home() {
   const { mapurl } = useParams();
@@ -9,7 +10,7 @@ export default function Home() {
 
   return (
     <Container maxWidth="lg">
-      <CollectionMap mapurl={mapurl} />
+      <DynamicMap mapurl={mapurl} />
     </Container>
   );
 }

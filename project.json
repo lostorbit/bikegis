@@ -54,14 +54,14 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/bikegis"],
+      "outputs": ["{projectRoot}/coverage/bikegis"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "coverage/bikegis"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["./src/**/*.{ts,tsx,js,jsx}"]
