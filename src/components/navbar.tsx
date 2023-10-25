@@ -10,10 +10,13 @@ function Navbar() {
           <Link to="/">Main Page</Link>
         </li>
         <li className="mb-2">
-          <Link to="/map">Maps</Link>
+          <Link to="/calendar">Calendar</Link>
+        </li>
+        <li className="mb-2">
+          <Link to="/map*:">Maps</Link>
         </li>
         <li>
-          <Link to="/tasks">Tasks</Link>
+          <Link to="/efforts">Efforts</Link>
         </li>
       </ul>
     </aside>

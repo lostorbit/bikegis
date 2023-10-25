@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Main from "../pages/main/main";
 import Map from "../pages/map/map";
-import Tasks from "../pages/tasks/tasks";
+import Efforts from "../pages/efforts/efforts";
 import Header from "../components/header";
+import Calendar from "../pages/calendar/calendar";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/map" element={<Map />} />
-            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/efforts" element={<Efforts />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Routes>
         </div>
       </div>
